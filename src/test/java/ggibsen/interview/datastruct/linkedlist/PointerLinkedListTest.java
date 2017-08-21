@@ -75,14 +75,16 @@ public class PointerLinkedListTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testDeleteEmpty() {
+    public void testDeleteEmptyList() {
         LinkedList ll = new PointerLinkedList();
 
         ll.delete(0);
+
+        Assert.assertEquals(0, ll.size());
     }
 
     @Test
-    public void testDeleteRootOnly() {
+    public void testDeleteSingleElementList() {
         LinkedList ll = new PointerLinkedList();
         Node nodeA = new Node("A");
         ll.add(nodeA, 0);
@@ -110,5 +112,39 @@ public class PointerLinkedListTest {
         Assert.assertEquals(2, ll.size());
     }
 
+    @Test
+    public void testDeleteFromMiddle() {
+        LinkedList ll = new PointerLinkedList();
+        Node nodeC = new Node("C");
+        ll.add(nodeC, 0);
+        Node nodeB = new Node("B");
+        ll.add(nodeB, 0);
+        Node nodeA = new Node("A");
+        ll.add(nodeA, 0);
 
+        // A B C
+        Node deletedNode = ll.delete(1);
+
+        // A C
+        Assert.assertEquals(nodeB, deletedNode);
+        Assert.assertEquals(2, ll.size());
+    }
+
+    @Test
+    public void testDeleteFromFront() {
+        LinkedList ll = new PointerLinkedList();
+        Node nodeC = new Node("C");
+        ll.add(nodeC, 0);
+        Node nodeB = new Node("B");
+        ll.add(nodeB, 0);
+        Node nodeA = new Node("A");
+        ll.add(nodeA, 0);
+
+        // A B C
+        Node deletedNode = ll.delete(0);
+
+        // B C
+        Assert.assertEquals(nodeA, deletedNode);
+        Assert.assertEquals(2, ll.size());
+    }
 }
