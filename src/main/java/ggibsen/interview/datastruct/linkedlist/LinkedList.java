@@ -14,4 +14,6 @@ public interface LinkedList {
     void add(Node newNode, int indexToInsertAt);
 
     Node get(int index);
+
+    int size();
 }

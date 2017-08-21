@@ -32,7 +32,7 @@ public class PointerLinkedListTest {
     @Test
     public void testSwap() {
         LinkedList ll = new PointerLinkedList();
-        Node nodeA =new Node("A");
+        Node nodeA = new Node("A");
         ll.add(nodeA, 0);
         Node nodeB = new Node("B");
         ll.add(nodeB, 0);
@@ -46,7 +46,7 @@ public class PointerLinkedListTest {
     @Test
     public void testSwapMany() {
         LinkedList ll = new PointerLinkedList();
-        Node nodeA =new Node("A");
+        Node nodeA = new Node("A");
         ll.add(nodeA, 0);
         // A
         Node nodeB = new Node("B");
@@ -74,9 +74,41 @@ public class PointerLinkedListTest {
         Assert.assertEquals(nodeD, ll.get(3));
     }
 
-    @Test
-    public void testDelete() {
-        Assert.fail("need to implement");
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteEmpty() {
+        LinkedList ll = new PointerLinkedList();
+
+        ll.delete(0);
     }
+
+    @Test
+    public void testDeleteRootOnly() {
+        LinkedList ll = new PointerLinkedList();
+        Node nodeA = new Node("A");
+        ll.add(nodeA, 0);
+
+        Node deletedNode = ll.delete(0);
+
+        Assert.assertEquals(nodeA, deletedNode);
+    }
+
+    @Test
+    public void testDeleteFromBack() {
+        LinkedList ll = new PointerLinkedList();
+        Node nodeC = new Node("C");
+        ll.add(nodeC, 0);
+        Node nodeB = new Node("B");
+        ll.add(nodeB, 0);
+        Node nodeA = new Node("A");
+        ll.add(nodeA, 0);
+
+        // A B C
+        Node deletedNode = ll.delete(2);
+
+        // A B
+        Assert.assertEquals(nodeC, deletedNode);
+        Assert.assertEquals(2, ll.size());
+    }
+
 
 }

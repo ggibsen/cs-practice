@@ -69,7 +69,33 @@ public class PointerLinkedList implements LinkedList {
 
     @Override
     public Node delete(int index) {
-        return null;
+        validIndex(index);
+        Node deletedNode;
+        if (size == 1) {
+            deletedNode = root;
+            root = null;
+        } else {
+            // A B C
+            deletedNode = getNode(index);
+            // update right side of list if exists
+            if (deletedNode.next != null) {
+                // C.prev --> A (or null)
+                Node nextNode = deletedNode.next;
+                nextNode.prev = deletedNode.prev;
+            }
+            // update left side of list if exists
+            if (deletedNode.prev != null) {
+                // A.next --> C (or null)
+                Node prevNode = deletedNode.prev;
+                prevNode.next = deletedNode.next;
+            }
+            // possibly update new root
+            if (deletedNode == root) {
+                root = deletedNode.next;
+            }
+        }
+        size--;
+        return deletedNode;
     }
 
     @Override
@@ -107,5 +133,10 @@ public class PointerLinkedList implements LinkedList {
     public Node get(int index) {
         validIndex(index);
         return getNode(index);
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 }
